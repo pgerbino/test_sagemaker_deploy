@@ -160,3 +160,7 @@ cython_debug/
 #.idea/
 
 .terraform*
+terraform*
+
+# Error
+# creating SageMaker model: ValidationException: RoleArn: Cross-account pass role is not allowed.
