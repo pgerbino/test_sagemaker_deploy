@@ -44,3 +44,27 @@ docker build -t test_sage_maker .
 docker tag test_sage_maker:latest 511771194412.dkr.ecr.eu-west-1.amazonaws.com/test_sage_maker:latest_1
 docker push 511771194412.dkr.ecr.eu-west-1.amazonaws.com/test_sage_maker:latest_1
 ```
+
+# Scheduling
+
+1. AWS Lambda with Amazon SageMaker
+
+If your model is hosted on AWS SageMaker, you can use AWS Lambda in conjunction with Amazon CloudWatch Events (now part of Amazon EventBridge) to trigger model execution according to a schedule:
+
+    Create a Lambda Function: Write a function that calls the SageMaker endpoint to run your model. You can use the AWS SDK (e.g., Boto3 for Python) within this function to make the invocation.
+    Schedule with EventBridge: Set up a rule in Amazon EventBridge that triggers your Lambda function at the desired schedule. EventBridge allows you to define schedules using cron-like expressions.
+
+Here is a simple example of how you might set this up using Boto3 in a Lambda function:
+
+python
+
+import boto3
+
+def lambda_handler(event, context):
+    client = boto3.client('sagemaker-runtime', region_name='us-east-1')
+    data = '{"data": "your data here"}'  # Your input data
+    response = client.invoke_endpoint(EndpointName='YourEndpointName',
+                                      ContentType='application/json',
+                                      Body=data)
+    return response['Body'].read()
+git
