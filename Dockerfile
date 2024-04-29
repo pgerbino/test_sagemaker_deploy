@@ -13,8 +13,7 @@ RUN pip install flask
 # Make port 8080 available to the world outside this container
 EXPOSE 8080
 
-# Define environment variable
-ENV NAME World
+# Copy and prepare the serve script
+COPY serve /usr/local/bin/serve
+RUN chmod +x /usr/local/bin/serve
 
-# Run app.py when the container launches
-CMD ["python", "app.py"]

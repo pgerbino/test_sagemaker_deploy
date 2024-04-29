@@ -1,0 +1,3 @@
+#!/bin/bash
+# serve script for starting Flask app
+python app.py
