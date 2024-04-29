@@ -30,6 +30,8 @@ The primary container for production variant AllTraffic did not pass the ping he
 
 5. {"message":"Missing Authentication Token"}
 Need to POST not GET
+# Error
+# creating SageMaker model: ValidationException: RoleArn: Cross-account pass role is not allowed.
 
 <!-- For goodness sake -->
 https://docs.aws.amazon.com/sagemaker/latest/dg/your-algorithms-inference-code.html

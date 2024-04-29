@@ -162,5 +162,3 @@ cython_debug/
 .terraform*
 terraform*
 
-# Error
-# creating SageMaker model: ValidationException: RoleArn: Cross-account pass role is not allowed.
