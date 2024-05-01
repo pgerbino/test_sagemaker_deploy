@@ -9,6 +9,7 @@ resource "aws_lambda_function" "example" {
 
   # Assuming the lambda code is zipped and stored as lambda_function.zip in the same directory as Terraform configuration
   filename      = "${path.module}/lambda_function.zip"
+  source_code_hash = filebase64sha256("${path.module}/lambda_function.zip")
 
   # IAM role with basic Lambda execution permissions
   role          = aws_iam_role.lambda_exec.arn
@@ -35,4 +36,25 @@ resource "aws_iam_role" "lambda_exec" {
 resource "aws_iam_role_policy_attachment" "lambda_policy" {
   role       = aws_iam_role.lambda_exec.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+}
+
+resource "aws_iam_policy" "lambda_sagemaker_invoke" {
+  name        = "lambda_sagemaker_invoke"
+  description = "Allows lambda to invoke SageMaker endpoint"
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow",
+        Action = "sagemaker:InvokeEndpoint",
+        Resource = "arn:aws:sagemaker:eu-west-1:511771194412:endpoint/hello-world-endpoint"
+      },
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "lambda_sagemaker_attach" {
+  role       = aws_iam_role.lambda_exec.name
+  policy_arn = aws_iam_policy.lambda_sagemaker_invoke.arn
 }
