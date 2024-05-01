@@ -44,7 +44,7 @@ resource "aws_sagemaker_model" "example" {
   execution_role_arn = aws_iam_role.sagemaker_execution_role.arn  # ARN of the execution role
 
   primary_container {
-    image = "511771194412.dkr.ecr.eu-west-1.amazonaws.com/test_sage_maker:latest_1"  # Docker image for the model
+    image = "511771194412.dkr.ecr.eu-west-1.amazonaws.com/test_sagemaker:latest"  # Docker image for the model
   }
 }
 
